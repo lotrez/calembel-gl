@@ -1,4 +1,4 @@
-package com.molkky.molkky.controllers;
+package com.molkky.molkky.controllers.tournament;
 
 import com.molkky.molkky.domain.Tournament;
 import com.molkky.molkky.model.TournamentModel;

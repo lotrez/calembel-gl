@@ -5,10 +5,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public interface TournamentRepository extends JpaRepository<Tournament, String>, JpaSpecificationExecutor<Tournament> {
     Tournament findById(Integer id);
     Tournament findByName(String tournamentName);
+    List<Tournament> findTournamentsByVisibleAndStartedNot();
+    List<Tournament> findTournamentsByVisibleAndStarted();
+    List<Tournament> findTournamentsByVisibleAndFinished();
     Tournament findByStatus(String status);
 }

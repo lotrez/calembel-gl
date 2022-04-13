@@ -49,15 +49,20 @@ public class Tournament {
     @Column(name = "type")
     private String type;
 
-    @Column( name = "status" )
+    @Column(name = "status")
     private String status;
 
+    @Column(name = "started")
+    private boolean started = false;
 
     @OneToMany(mappedBy="tournament")
     private Set<User> users;
 
     @OneToMany(mappedBy="tournament")
     private Set<Round> rounds;
+
+    @Column(name = "finished")
+    private boolean finished = false;
 
     @OneToMany(mappedBy="tournament")
     private Set<Team> teams;
