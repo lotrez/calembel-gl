@@ -1,12 +1,14 @@
 package com.molkky.molkky.domain;
 
-import Type.TournamentStatus;
 import com.molkky.molkky.model.TournamentModel;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -58,14 +60,19 @@ public class Tournament {
     @OneToMany(mappedBy="tournament")
     private Set<User> users;
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany(mappedBy="tournament")
-    private Set<Round> rounds;
+    private List<Round> rounds;
+
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @OneToMany(mappedBy="tournament")
+    private List<Team> teams;
+
+    @Column(name = "indexPhase")
+    private Integer indexPhase = 0;
 
     @Column(name = "finished")
-    private boolean finished = false;
-
-    @OneToMany(mappedBy="tournament")
-    private Set<Team> teams;
+    private boolean finished;
 
     public Tournament(String name, String location, Date date, Date cutOffDate, Integer minTeam, Integer maxTeam, boolean isVisible, Integer nbRounds, Integer nbCourts) {
         this.name = name;
@@ -77,7 +84,6 @@ public class Tournament {
         this.isVisible = isVisible;
         this.nbRounds = nbRounds;
         this.nbCourts = nbCourts;
-        this.status = TournamentStatus.Available;
     }
 
     public Tournament(TournamentModel tournamentModel) {
@@ -90,11 +96,9 @@ public class Tournament {
         this.isVisible = tournamentModel.isVisible();
         this.nbRounds = tournamentModel.getNbRounds();
         this.nbCourts = tournamentModel.getNbCourts();
-        this.status = TournamentStatus.Available;
     }
 
  
     public Tournament() {
-        this.status = TournamentStatus.Available;
     }
 }
