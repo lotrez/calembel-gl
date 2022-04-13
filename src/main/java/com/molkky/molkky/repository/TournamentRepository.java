@@ -12,8 +12,7 @@ import java.util.List;
 public interface TournamentRepository extends JpaRepository<Tournament, String>, JpaSpecificationExecutor<Tournament> {
     Tournament findById(Integer id);
     Tournament findByName(String tournamentName);
-    List<Tournament> findTournamentsByVisibleAndStartedNot();
-    List<Tournament> findTournamentsByVisibleAndStarted();
-    List<Tournament> findTournamentsByVisibleAndFinished();
+    List<Tournament> findTournamentsByVisibleAndStarted(boolean visible, boolean started);
+    List<Tournament> findTournamentsByVisibleAndFinished(boolean visible, boolean finished);
     Tournament findByStatus(String status);
 }

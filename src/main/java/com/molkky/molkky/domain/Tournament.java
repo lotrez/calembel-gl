@@ -38,8 +38,8 @@ public class Tournament {
     @Column(name = "maxTeam")
     private Integer maxTeam;
 
-    @Column(name = "isVisible")
-    private boolean isVisible;
+    @Column(name = "visible")
+    private boolean visible;
 
     @Column(name = "nbRounds")
     private Integer nbRounds;
@@ -74,14 +74,14 @@ public class Tournament {
     @Column(name = "finished")
     private boolean finished;
 
-    public Tournament(String name, String location, Date date, Date cutOffDate, Integer minTeam, Integer maxTeam, boolean isVisible, Integer nbRounds, Integer nbCourts) {
+    public Tournament(String name, String location, Date date, Date cutOffDate, Integer minTeam, Integer maxTeam, boolean visible, Integer nbRounds, Integer nbCourts) {
         this.name = name;
         this.location = location;
         this.date = date;
         this.cutOffDate = cutOffDate;
         this.minTeam = minTeam;
         this.maxTeam = maxTeam;
-        this.isVisible = isVisible;
+        this.visible = visible;
         this.nbRounds = nbRounds;
         this.nbCourts = nbCourts;
     }
@@ -93,7 +93,7 @@ public class Tournament {
         this.cutOffDate = tournamentModel.getCutOffDate();
         this.minTeam = tournamentModel.getMinTeam();
         this.maxTeam = tournamentModel.getMaxTeam();
-        this.isVisible = tournamentModel.isVisible();
+        this.visible = tournamentModel.isVisible();
         this.nbRounds = tournamentModel.getNbRounds();
         this.nbCourts = tournamentModel.getNbCourts();
     }

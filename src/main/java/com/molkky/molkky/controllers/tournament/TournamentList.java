@@ -14,9 +14,9 @@ public class TournamentList {
     @GetMapping("/tournament")
     public String tournamentList(Model model) {
 //        get visible, finished and in progress tournaments
-        model.addAttribute("openTournaments", tournamentRepository.findTournamentsByVisibleAndStartedNot());
-        model.addAttribute("inprogressTournaments", tournamentRepository.findTournamentsByVisibleAndStartedNot());
-        model.addAttribute("endedTournaments", tournamentRepository.findTournamentsByVisibleAndFinished());
+        model.addAttribute("openTournaments", tournamentRepository.findTournamentsByVisibleAndStarted(true, false));
+        model.addAttribute("inprogressTournaments", tournamentRepository.findTournamentsByVisibleAndStarted(true, true));
+        model.addAttribute("endedTournaments", tournamentRepository.findTournamentsByVisibleAndFinished(true, true));
         return "tournament/list";
     }
 
