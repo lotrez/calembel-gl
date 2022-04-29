@@ -18,7 +18,9 @@
 		<java.version>11</java.version>
 		<sonar.host.url>https://172.24.1.33/sonar</sonar.host.url>
 		<sonar.login>5da1e6ee849091ca8fec6cf16062bc190df5382e</sonar.login>
+		<!--suppress UnresolvedMavenProperty -->
 		<sonar.projectKey>Molkky:${GIT_BRANCH}</sonar.projectKey>
+		<!--suppress UnresolvedMavenProperty -->
 		<sonar.projectName>${GIT_BRANCH}</sonar.projectName>
 		<sonar.coverage.jacoco.xmlReportPaths>target/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
@@ -138,6 +140,16 @@
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>31.0.1-jre</version>
+		</dependency>
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<version>8.0</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>2.3.0</version>
 		</dependency>
 
 	</dependencies>

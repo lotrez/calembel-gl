@@ -3,54 +3,168 @@
     <div th:replace="fragments/header"></div>
     <link rel="stylesheet" th:href="@{/styles/tournament/create.css}" href="../" />
     <title>View Tournoi</title>
+    <style>
+        .partContainer {
+            width: 95%;
+            height: auto;
+            border-radius: 7px;
+            background-color: white;
+            padding: 10px 20px;
+            margin: 10px 0;
+        }
+        .partTitle {
+            font-weight: bold;
+        }
+        .partSubtitle {
+            letter-spacing: 2px;
+        }
+        ul.roundsList {
+            list-style: none;
+        }
+        .dir {
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
+        .imgBracket {
+            margin-left: auto;
+            margin-right: auto;
+            display: block
+        }
+        .teamCard {
+            width: 246px;
+            background-color: #F4F4F8;
+            box-sizing: border-box;
+            box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.25);
+            margin: 0 10px;
+            border-radius: 7px;
+        }
+        #participantContainer {
+            display: flex;
+            flex-direction: row;
+        }
+        .teamName {
+            background-color: #5B5A58;
+            color: white;
+            font-weight: bold;
+            margin: 0;
+            padding: 2px 5px;
+            border-top-right-radius: 7px;
+            border-top-left-radius: 7px;
+            text-transform: uppercase;
+        }
+        .cardContentContainer {
+            padding: 5px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+        .teamLogo {
+            height: 60px;
+            width: 60px;
+            border-radius: 7px;
+            background-color: #6D41F3;
+        }
+        .teamMember {
+            margin: 3px;
+        }
+    </style>
 </head>
-<body>
-    <h1>Nom</h1>
-    <h2 th:text="${tournament.name}"></h2>
+<body class="bg">
+    <div class="pageContainer">
+        <div th:replace="fragments/sidebar"></div>
+        <div class="contentContainer">
+            <div th:replace="fragments/searchbar"></div>
+            <div class="contentTitle">
+                <p th:text="|${tournament.name} - (${tournament.status})|"></p>
+            </div>
 
-    <h1>Location</h1>
-    <h2 th:text="${tournament.location}"></h2>
+            <div class="partContainer">
+                <h2 class="partTitle">Informations générales</h2>
+                <p th:text="|Le tournoi ${tournament.name} du ${tournament.date} aura lieu à ${tournament.location} débutera le ${tournament.date}.|"></p>
+                <!-- add for the club the possibility to edit their rules (bring own molkky games, restaurant services, etc.) -->
+                <p>Merci d'apporter votre propre jeu de molkky et de quoi manger pour la journée. Le club ne propose pas de services de restauration.</p>
+                <hr>
+                <p th:text="|Le nombre d'équipes pour ce tournoi est compris entre ${tournament.minTeam} et ${tournament.maxTeam}.|"></p>
+                <p th:text="|Il y a actuellement ${nbTeam} équipes inscrites à ce tournoi.|"></p>
+                <p th:text="|La phase courante est la phase n°${tournament.indexPhase}.|"></p>
+            </div>
 
-    <h1>Date</h1>
-    <h2 th:text="${tournament.date}"></h2>
-
-    <h1>Nombre minimum d'équipe </h1>
-    <h2 th:text="${tournament.minTeam}"></h2>
-
-    <h1>Nombre maximum d'équipe </h1>
-    <h2 th:text="${tournament.maxTeam}"></h2>
-
-    <h1>Status </h1>
-    <h2 th:text="${tournament.status}"></h2>
-
-    <h1>Phase courante </h1>
-    <h2 th:text="${tournament.indexPhase}"></h2>
-
-
-    <h1>Nombre  d'équipe inscrits </h1>
-    <h2 th:text="${nbTeam}"></h2>
-
-    <form action="#" th:action="@{/tournament/view}" method="post"  class="formContainer">
-
-        <div th:if=" ${user} != null">
-            <div th:if=" ${user.role} == 'Administrator'">
-                <div th:if=" ${tournament.status} == 'Available'">
-
-                <div th:if=" ${tournament.isVisible} == false">
-                    <button id="isValid" name = "visible" class="primaryButton" type="submit">Rendre publique le tournois</button>
-                </div>
-
-                <div th:if=" ${tournament.isVisible} == true">
-                    <button id="startTounament" name = "launch" class="primaryButton" type="submit">Lancer le tournois</button>
+            <div class="partContainer">
+                <h2 class="partTitle">Format du tournoi</h2>
+                <!-- rendre le <p> suivant dynamique en fonction du format du tournoi -->
+                <p>Le tournoi suit un format classique, à savoir une phase de poules suivie d'un bracket.</p>
+                <h3 class="partSubtitle">Rounds</h3>
+                <div class="dir">
+                    <div>
+                        <ul class="roundsList">
+                            <li>Phase de poules</li>
+                            <li>Quarts de finale</li>
+                            <li>Demi finale</li>
+                            <li>Finale</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="roundsList">
+                            <li>Best of 1</li>
+                            <li>Best of 3</li>
+                            <li>Best of 3</li>
+                            <li>Best of 5</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
+
+            <div class="partContainer">
+                <h2 class="partTitle">Bracket</h2>
+                <img th:src="@{/assets/bracket.png}" class="imgBracket" alt="Tournament Bracket">
             </div>
+
+            <div class="partContainer">
+                <h2 class="partTitle">Participants</h2>
+                <div id="participantContainer">
+
+                    <div class="teamCard">
+                        <h3 class="teamName">Team Name</h3>
+                        <div class="cardContentContainer">
+                            <p class="teamLogo"></p>
+                            <ul class="roundsList">
+                                <li class="teamMember">Membre1</li>
+                                <li class="teamMember">Membre2</li>
+                                <li class="teamMember">Membre3</li>
+                                <li class="teamMember">Membre4</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="partContainer">
+                <h2 class="partTitle">Règles</h2>
+                <p>A définir...</p>
+            </div>
+
+            <form action="#" th:action="@{/tournament/view}" method="post"  class="formContainer">
+                <div th:if=" ${user} != null">
+                    <div th:if=" ${user.role} == 'Administrator'">
+                        <div th:if=" ${tournament.status} == 'Available'">
+
+                            <div th:if=" ${tournament.isVisible} == false">
+                                <button id="isValid" name = "visible" class="primaryButton" type="submit">Rendre publique le tournois</button>
+                            </div>
+
+                            <div th:if=" ${tournament.isVisible} == true">
+                                <button id="startTounament" name = "launch" class="primaryButton" type="submit">Lancer le tournois</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input hidden th:value="${tournament.id}" th:name="tournamentId"/>
+            </form>
         </div>
-        <input hidden   th:value="${tournament.id}" th:name="tournamentId"/>
-    </form>
-
-
-
-
+    </div>
 </body>
+<div th:replace="fragments/footer"></div>
 </html>
