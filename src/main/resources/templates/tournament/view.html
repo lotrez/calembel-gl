@@ -10,15 +10,14 @@
         <div class="contentContainer">
             <div th:replace="fragments/searchbar"></div>
             <div class="contentTitle">
-                <p th:text="|${tournament.name} - (${tournament.status})|"></p>
+                <div class="setInline statusCircleGreen"></div>
+                <p class="setInline" th:text="| - ${tournament.name} - (${tournament.status})|"></p>
             </div>
-
             <div class="partContainer">
                 <h2 class="partTitle">Informations générales</h2>
                 <p th:text="|Le tournoi ${tournament.name} du ${tournament.date} aura lieu à ${tournament.location} débutera le ${tournament.date}.|"></p>
-                <!-- TODO: add for the club the possibility to edit their rules (bring own molkky games, restaurant services, etc.) -->
                 <p>Merci d'apporter votre propre jeu de molkky et de quoi manger pour la journée. Le club ne propose pas de services de restauration.</p>
-                <hr>
+                <br>
                 <p th:text="|Le nombre d'équipes pour ce tournoi est compris entre ${tournament.minTeam} et ${tournament.maxTeam}.|"></p>
                 <p th:text="|Il y a actuellement ${nbTeam} équipes inscrites à ce tournoi.|"></p>
                 <p th:text="|La phase courante est la phase n°${tournament.indexPhase}.|"></p>
@@ -26,12 +25,11 @@
 
             <div class="partContainer">
                 <h2 class="partTitle">Format du tournoi</h2>
-                <!-- TODO: rendre le <p> suivant dynamique en fonction du format du tournoi -->
                 <p>Le tournoi suit un format classique, à savoir une phase de poules suivie d'un bracket.</p>
                 <h3 class="partSubtitle">Rounds</h3>
                 <div class="dir">
                     <div>
-                        <ul class="roundsList">
+                        <ul style="text-align: end;" class="roundsList">
                             <li>Phase de poules</li>
                             <li>Quarts de finale</li>
                             <li>Demi finale</li>
@@ -51,6 +49,7 @@
 
             <div class="partContainer">
                 <h2 class="partTitle">Bracket</h2>
+                <p>The following image will be replaced by the right planning when the US will be developed and tested.</p>
                 <img th:src="@{/assets/bracket.png}" class="imgBracket" alt="Tournament Bracket">
             </div>
 
@@ -58,19 +57,20 @@
                 <h2 class="partTitle">Participants</h2>
                 <div id="participantContainer">
 
-                    <div class="teamCard">
-                        <h3 class="teamName">Team Name</h3>
-                        <div class="cardContentContainer">
-                            <p class="teamLogo"></p>
-                            <ul class="roundsList">
-                                <li class="teamMember">Membre1</li>
-                                <li class="teamMember">Membre2</li>
-                                <li class="teamMember">Membre3</li>
-                                <li class="teamMember">Membre4</li>
-                            </ul>
+                    <th:block th:each="team : ${tournament.getTeams()}">
+                        <div class="teamCard">
+                            <h3 class="teamName" th:text="${team.getName()}"></h3>
+                            <div class="cardContentContainer">
+                                <p class="teamLogo"></p>
+                                <ul class="roundsList">
+                                    <li class="teamMember">Membre1</li>
+                                    <li class="teamMember">Membre2</li>
+                                    <li class="teamMember">Membre3</li>
+                                    <li class="teamMember">Membre4</li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
-
+                    </th:block>
                 </div>
             </div>
 
