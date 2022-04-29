@@ -1,75 +1,8 @@
 <html xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="fr">
 <head>
     <div th:replace="fragments/header"></div>
-    <link rel="stylesheet" th:href="@{/styles/tournament/create.css}" href="../" />
+    <link rel="stylesheet" th:href="@{/styles/tournament/view.css}" href="../" />
     <title>View Tournoi</title>
-    <style>
-        .partContainer {
-            width: 95%;
-            height: auto;
-            border-radius: 7px;
-            background-color: white;
-            padding: 10px 20px;
-            margin: 10px 0;
-        }
-        .partTitle {
-            font-weight: bold;
-        }
-        .partSubtitle {
-            letter-spacing: 2px;
-        }
-        ul.roundsList {
-            list-style: none;
-        }
-        .dir {
-            display: flex;
-            justify-content: center;
-            flex-direction: row;
-        }
-        .imgBracket {
-            margin-left: auto;
-            margin-right: auto;
-            display: block
-        }
-        .teamCard {
-            width: 246px;
-            background-color: #F4F4F8;
-            box-sizing: border-box;
-            box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.25);
-            margin: 0 10px;
-            border-radius: 7px;
-        }
-        #participantContainer {
-            display: flex;
-            flex-direction: row;
-        }
-        .teamName {
-            background-color: #5B5A58;
-            color: white;
-            font-weight: bold;
-            margin: 0;
-            padding: 2px 5px;
-            border-top-right-radius: 7px;
-            border-top-left-radius: 7px;
-            text-transform: uppercase;
-        }
-        .cardContentContainer {
-            padding: 5px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-content: center;
-        }
-        .teamLogo {
-            height: 60px;
-            width: 60px;
-            border-radius: 7px;
-            background-color: #6D41F3;
-        }
-        .teamMember {
-            margin: 3px;
-        }
-    </style>
 </head>
 <body class="bg">
     <div class="pageContainer">
@@ -83,7 +16,7 @@
             <div class="partContainer">
                 <h2 class="partTitle">Informations générales</h2>
                 <p th:text="|Le tournoi ${tournament.name} du ${tournament.date} aura lieu à ${tournament.location} débutera le ${tournament.date}.|"></p>
-                <!-- add for the club the possibility to edit their rules (bring own molkky games, restaurant services, etc.) -->
+                <!-- TODO: add for the club the possibility to edit their rules (bring own molkky games, restaurant services, etc.) -->
                 <p>Merci d'apporter votre propre jeu de molkky et de quoi manger pour la journée. Le club ne propose pas de services de restauration.</p>
                 <hr>
                 <p th:text="|Le nombre d'équipes pour ce tournoi est compris entre ${tournament.minTeam} et ${tournament.maxTeam}.|"></p>
@@ -93,7 +26,7 @@
 
             <div class="partContainer">
                 <h2 class="partTitle">Format du tournoi</h2>
-                <!-- rendre le <p> suivant dynamique en fonction du format du tournoi -->
+                <!-- TODO: rendre le <p> suivant dynamique en fonction du format du tournoi -->
                 <p>Le tournoi suit un format classique, à savoir une phase de poules suivie d'un bracket.</p>
                 <h3 class="partSubtitle">Rounds</h3>
                 <div class="dir">
