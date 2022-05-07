@@ -38,16 +38,16 @@ class ConnexionFormTest {
     @Value("${server.port}")
     private Integer port;
     private String url;
-    private String emailPlayer = "connexion.player@gmail.com";
-    private String passwordPlayer = "test123";
-    private String teamName = "TeamConnexionPlayer";
-    private String teamCode = "TeamCode";
-    private String tournamentName = "TournamentConnexion";
-    private String tournamentName2 = "TournamentConnexion2";
-    private String emailAdmin = "connexion.admin@gmail.com";
-    private String passwordAdmin = "admin123";
-    private String emailStaff = "connexion.staff@gmail.com";
-    private String passwordStaff = "staff123";
+    final private String emailPlayer = "connexion.player@gmail.com";
+    final private String passwordPlayer = "test123";
+    final private String teamName = "TeamConnexionPlayer";
+    final private String teamCode = "TeamCode";
+    final private String tournamentName = "TournamentConnexion";
+    final private String tournamentName2 = "TournamentConnexion2";
+    final private String emailAdmin = "connexion.admin@gmail.com";
+    final private String passwordAdmin = "admin123";
+    final private String emailStaff = "connexion.staff@gmail.com";
+    final private String passwordStaff = "staff123";
 
 
     @BeforeAll
@@ -128,7 +128,7 @@ class ConnexionFormTest {
         config.getDriver().findElement(new By.ById("connexion")).click();
         wait.until(ExpectedConditions.visibilityOf(config.getDriver().findElement(new By.ById("homeDescription"))));
         Assertions.assertEquals("Accueil", config.getDriver().getTitle());
-        config.getDriver().findElement(new By.ById("info")).click();
+        config.getDriver().findElement(new By.ById("infos_p")).click();
         Assertions.assertEquals(emailPlayer, config.getDriver().findElement(new By.ById("email")).getText());
         Assertions.assertEquals(teamName, config.getDriver().findElement(new By.ById("team")).getText());
         Assertions.assertEquals("PLAYER", config.getDriver().findElement(new By.ById("role")).getText());

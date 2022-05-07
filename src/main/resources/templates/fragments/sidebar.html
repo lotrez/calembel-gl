@@ -9,31 +9,31 @@
             <a href="/" style="text-decoration: none;">
                 <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.equals('/') ? 'bgButton textPrimary' : ''}">
                     <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.equals('/') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/home.svg}" alt="Home icon"/>
-                    <p class="sidebarButtonContent">Accueil</p>
+                    <p id="home_v" class="sidebarButtonContent">Accueil</p>
                 </div>
             </a>
             <a href="/tournamentongoing" style="text-decoration: none;">
                 <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/tournamentongoing') ? 'bgButton textPrimary' : ''}">
                     <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/tournamentongoing') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/tournamentongoing.svg}" alt="Tournament cup for ongoin tournament icon"/>
-                    <p class="sidebarButtonContent">Tournoi en cours</p>
+                    <p id="tournamentongoing_v" class="sidebarButtonContent">Tournoi en cours</p>
                 </div>
             </a>
             <a href="/tournament" style="text-decoration: none;">
                 <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/tournament') ? 'bgButton textPrimary' : ''}">
                     <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/tournament') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/tournament.svg}" alt="Tournament bracket for tournnaments icon"/>
-                    <p class="sidebarButtonContent">Tournois</p>
+                    <p id="tournament_v" class="sidebarButtonContent">Tournois</p>
                 </div>
             </a>
             <a href="/teams" style="text-decoration: none;">
                 <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/teams') ? 'bgButton textPrimary' : ''}">
                     <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/teams') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/teams.svg}" alt="Team icon"/>
-                    <p class="sidebarButtonContent">Équipes</p>
+                    <p id="teams_v" class="sidebarButtonContent">Équipes</p>
                 </div>
             </a>
             <a href="/users" style="text-decoration: none;">
                 <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/users') ? 'bgButton textPrimary' : ''}">
                     <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/users') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/users.svg}" alt="User icon"/>
-                    <p class="sidebarButtonContent">Utilisateurs</p>
+                    <p id="users_v" class="sidebarButtonContent">Utilisateurs</p>
                 </div>
             </a>
         </div>
@@ -43,43 +43,43 @@
                 <a href="/" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.equals('/') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.equals('/') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/home.svg}" alt="Home icon"/>
-                        <p class="sidebarButtonContent">Accueil</p>
+                        <p id="home_p" class="sidebarButtonContent">Accueil</p>
                     </div>
                 </a>
                 <a href="/tournamentongoing" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/tournamentongoing') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/tournamentongoing') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/tournamentongoing.svg}" alt="Tournament cup for ongoin tournament icon"/>
-                        <p class="sidebarButtonContent">Tournoi en cours</p>
+                        <p id="tournamentongoing_p" class="sidebarButtonContent">Tournoi en cours</p>
                     </div>
                 </a>
                 <a href="/tournament" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/tournament') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/tournament') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/tournament.svg}" alt="Tournament bracket for tournnaments icon"/>
-                        <p class="sidebarButtonContent">Tournois</p>
+                        <p id="tournament_p" class="sidebarButtonContent">Tournois</p>
                     </div>
                 </a>
                 <a href="/mymatches" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/mymatches') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/mymatches') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/mymatches.svg}" alt ="Boxing fist for my matches icon"/>
-                        <p class="sidebarButtonContent">Mes matchs</p>
+                        <p id="mymatches_p" class="sidebarButtonContent">Mes matchs</p>
                     </div>
                 </a>
                 <a href="/teams" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/teams') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/teams') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/teams.svg}" alt="Team icon"/>
-                        <p class="sidebarButtonContent">Équipes</p>
+                        <p id="teams_p" class="sidebarButtonContent">Équipes</p>
                     </div>
                 </a>
                 <a href="/users" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/users') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/users') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/users.svg}" alt="User icon"/>
-                        <p class="sidebarButtonContent">Utilisateurs</p>
+                        <p id="users_p" class="sidebarButtonContent">Utilisateurs</p>
                     </div>
                 </a>
                 <a href="/infos" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/infos') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/infos') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/infos.svg}" alt="Information icon"/>
-                        <p class="sidebarButtonContent">Mes informations personnelles</p>
+                        <p id="infos_p" class="sidebarButtonContent">Mes informations personnelles</p>
                     </div>
                 </a>
             </div>
@@ -88,43 +88,43 @@
                 <a href="/" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.equals('/') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.equals('/') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/home.svg}" alt="Home icon"/>
-                        <p class="sidebarButtonContent">Accueil</p>
+                        <p id="home_s" class="sidebarButtonContent">Accueil</p>
                     </div>
                 </a>
                 <a href="/tournamentongoing" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/tournamentongoing') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/tournamentongoing') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/tournamentongoing.svg}" alt="Tournament cup for ongoin tournament icon"/>
-                        <p class="sidebarButtonContent">Tournoi en cours</p>
+                        <p id="tournamentongoing_s" class="sidebarButtonContent">Tournoi en cours</p>
                     </div>
                 </a>
                 <a href="/tournament" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/tournament') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/tournament') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/tournament.svg}" alt="Tournament bracket for tournnaments icon"/>
-                        <p class="sidebarButtonContent">Tournois</p>
+                        <p id="tournament_s" class="sidebarButtonContent">Tournois</p>
                     </div>
                 </a>
                 <a href="/mymatches" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/mymatches') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/mymatches') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/mymatches.svg}" alt ="Boxing fist for my matches icon"/>
-                        <p class="sidebarButtonContent">Mes matchs</p>
+                        <p id="mymatches_s" class="sidebarButtonContent">Mes matchs</p>
                     </div>
                 </a>
                 <a href="/teams" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/teams') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/teams') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/teams.svg}" alt="Team icon"/>
-                        <p class="sidebarButtonContent">Équipes</p>
+                        <p id="teams_s" class="sidebarButtonContent">Équipes</p>
                     </div>
                 </a>
                 <a href="/users" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/users') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/users') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/users.svg}" alt="User icon"/>
-                        <p class="sidebarButtonContent">Utilisateurs</p>
+                        <p id="users_s" class="sidebarButtonContent">Utilisateurs</p>
                     </div>
                 </a>
                 <a href="/infos" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/infos') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/infos') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/infos.svg}" alt="Information icon"/>
-                        <p class="sidebarButtonContent">Mes informations personnelles</p>
+                        <p id="infos_s" class="sidebarButtonContent">Mes informations personnelles</p>
                     </div>
                 </a>
             </div>
@@ -133,37 +133,37 @@
                 <a href="/" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.equals('/') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.equals('/') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/home.svg}" alt="Home icon"/>
-                        <p class="sidebarButtonContent">Accueil</p>
+                        <p id="home_a" class="sidebarButtonContent">Accueil</p>
                     </div>
                 </a>
                 <a href="/tournamentongoing" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/tournamentongoing') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/tournamentongoing') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/tournamentongoing.svg}" alt="Tournament cup for ongoin tournament icon"/>
-                        <p class="sidebarButtonContent">Tournoi en cours</p>
+                        <p id="tournamentongoing_a" class="sidebarButtonContent">Tournoi en cours</p>
                     </div>
                 </a>
                 <a href="/tournament" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/tournament') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/tournament') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/tournament.svg}" alt="Tournament bracket for tournnaments icon"/>
-                        <p class="sidebarButtonContent">Tournois</p>
+                        <p id="tournament_a" class="sidebarButtonContent">Tournois</p>
                     </div>
                 </a>
                 <a href="/teams" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/teams') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/teams') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/teams.svg}" alt="Team icon"/>
-                        <p class="sidebarButtonContent">Équipes</p>
+                        <p id="teams_a" class="sidebarButtonContent">Équipes</p>
                     </div>
                 </a>
                 <a href="/users" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/users') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/users') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/users.svg}" alt="User icon"/>
-                        <p class="sidebarButtonContent">Utilisateurs</p>
+                        <p id="users_a" class="sidebarButtonContent">Utilisateurs</p>
                     </div>
                 </a>
                 <a href="/infos" style="text-decoration: none;">
                     <div th:class="'sidebarButton '+${#httpServletRequest.requestURI.startsWith('/infos') ? 'bgButton textPrimary' : ''}">
                         <img th:class="'sidebarIcon '+${#httpServletRequest.requestURI.startsWith('/infos') ? 'sidebarIcon' : 'sidebarIconInactive'}" th:src="@{/assets/infos.svg}" alt="Information icon"/>
-                        <p class="sidebarButtonContent">Mes informations personnelles</p>
+                        <p id="infos_a" class="sidebarButtonContent">Mes informations personnelles</p>
                     </div>
                 </a>
             </div>
