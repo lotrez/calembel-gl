@@ -11,53 +11,49 @@ import com.molkky.molkky.repository.TeamRepository;
 import com.molkky.molkky.repository.TournamentRepository;
 import com.molkky.molkky.repository.UserRepository;
 import com.molkky.molkky.repository.UserTournamentRoleRepository;
-import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RunWith(MockitoJUnitRunner.class)
+@WebMvcTest(value = TeamService.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@ExtendWith(MockitoExtension.class)
 public class TeamServiceTest {
 
-        @InjectMocks
+        @Autowired
         private TeamService teamService;
 
-        @Mock
+        @MockBean
         private CreateTeamModel teamModel;
 
-        @Mock
+        @MockBean
         private  TournamentRepository tournamentRepository;
 
-        @Mock
+        @MockBean
         private TeamRepository teamRepository;
 
-        @Mock
+        @MockBean
         private AddPlayerlistModel addPlayerlistModel;
 
-        @Mock
+        @MockBean
         private AddPlayerModel addPlayerModel1;
 
-        @Mock
+        @MockBean
         private UserRepository userRepository;
 
-        @Mock
+        @MockBean
         private UserTournamentRoleRepository userTounamentRoleRepository;
 
-        @Mock
+        @MockBean
         private User user;
-
-        @BeforeEach
-        public void setUp(){
-            MockitoAnnotations.openMocks(this);
-        }
 
         @Test
         public void testCreateTeam(){
