@@ -59,14 +59,14 @@ public class TeamCreateControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(teamController).build();
         MockitoAnnotations.openMocks(this);
     }
-    /*
-    Test work with conditions, example : @Controller -> @RestController or add @RequestBody to method
-      but then the page is not return
 
-     */
     @Test
     public void testTeamGetMethod() throws Exception{
-        this.mockMvc.perform(get("/team/create/"));
+        this.mockMvc.perform(get("/team/create/"))
+                        .andDo(MockMvcResultHandlers.print())
+                .andExpect(model().attributeExists("tournaments"))
+                .andExpect(model().attributeExists("team"))
+                .andExpect(forwardedUrl("/team/create"));
     }
 
 
@@ -88,8 +88,12 @@ public class TeamCreateControllerTest {
                 .andExpect(view().name("/team/addPlayer"))
                 .andExpect(model().attribute("team",team))
                 .andExpect(model().attributeExists("teamModel"))
+                .andExpect(model().attributeExists("form"))
+                .andExpect(model().attribute("isDiffMail",true))
                 .andExpect(MockMvcResultMatchers.forwardedUrl("/team/addPlayer"))
                 .andExpect(status().is2xxSuccessful());
+
+        Mockito.verify(teamService,Mockito.times(1)).create(Mockito.any(CreateTeamModel.class));
     }
 
     @Test
@@ -112,6 +116,12 @@ public class TeamCreateControllerTest {
                 .andExpect(view().name("redirect:/team/create"))
                 .andExpect(MockMvcResultMatchers.redirectedUrl("/team/create"))
                 .andExpect(status().is3xxRedirection());
+
+        Mockito.verify(addPlayerlistModel,Mockito.times(1)).getPlayers();
+        Mockito.verify(addPlayerModel1,Mockito.times(1)).getTeamId();
+        Mockito.verify(addPlayerModel1,Mockito.times(1)).addPlayer();
+        Mockito.verify(addPlayerModel1,Mockito.times(1)).getMail();
+        Mockito.verify(teamRepository,Mockito.times(1)).findById(Mockito.anyInt());
 
     }
 
@@ -138,5 +148,13 @@ public class TeamCreateControllerTest {
                 .andExpect(view().name("/team/addPlayer"))
                 .andExpect(MockMvcResultMatchers.forwardedUrl("/team/addPlayer"))
                 .andExpect(status().is2xxSuccessful());
+
+        Mockito.verify(addPlayerlistModel,Mockito.times(1)).getPlayers();
+        Mockito.verify(addPlayerModel1,Mockito.times(1)).getTeamId();
+        Mockito.verify(addPlayerModel1,Mockito.times(1)).addPlayer();
+        Mockito.verify(addPlayerModel1,Mockito.times(1)).getMail();
+        Mockito.verify(teamRepository,Mockito.times(1)).findById(Mockito.anyInt());
+        Mockito.verify(addPlayerModel2,Mockito.times(1)).addPlayer();
+        Mockito.verify(addPlayerModel2,Mockito.times(1)).getMail();
     }
 }
