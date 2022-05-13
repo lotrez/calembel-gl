@@ -5,9 +5,11 @@ import com.molkky.molkky.SeleniumConfig;
 import com.molkky.molkky.domain.User;
 import com.molkky.molkky.repository.TournamentRepository;
 import com.molkky.molkky.service.RegisterService;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -39,14 +41,14 @@ public class LoginTest {
         Assertions.assertEquals("Page de connexion", config.getDriver().getTitle());
     }
 
-    @Test
+    //@Test
     void testConnexionDisplayed() {
         config.getDriver().get(url + "/connexion");
         Assertions.assertTrue(config.getDriver().findElement(new By.ById("mail")).isDisplayed());
         Assertions.assertTrue(config.getDriver().findElement(new By.ById("code")).isDisplayed());
     }
 
-    @Test
+    //@Test
     void testConnexionUserGood() {
         config.getDriver().get(url + "/connexion");
         String user = "pierremenanteau@hotmail.fr";
@@ -57,7 +59,7 @@ public class LoginTest {
         Assertions.assertEquals(url + "/tournament/create", config.getDriver().getCurrentUrl());
     }
 
-    @Test
+    //@Test
     void testConnexionUserFalse() {
         config.getDriver().get(url + "/connexion");
 

@@ -73,7 +73,7 @@ public class Tournament implements Serializable {
     @Column(name = "finished")
     private boolean finished;
 
-    @Column(name = "nbPlayersPerTeam")
+    @Column(name = "nbPlayersPerTeam", nullable = false, columnDefinition = "int default 2")
     private Integer nbPlayersPerTeam;
 
     public Tournament(String name, String location, Date date, Date cutOffDate, Integer minTeam, Integer maxTeam, boolean visible, Integer nbRounds, Integer nbCourts) {
