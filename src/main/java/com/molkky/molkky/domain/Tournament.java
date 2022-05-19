@@ -38,7 +38,7 @@ public class Tournament implements Serializable {
     private Integer minTeam;
 
     @Column(name = "maxTeam")
-    private Integer maxTeam;
+    private Integer maxTeam = 10;
 
     @Column(name = "visible")
     private boolean visible;
@@ -77,7 +77,7 @@ public class Tournament implements Serializable {
     private boolean finished;
 
     @Column(name = "nbPlayersPerTeam")
-    private Integer nbPlayersPerTeam;
+    private Integer nbPlayersPerTeam = 2;
 
     public Tournament(String name, String location, Date date, Date cutOffDate, Integer minTeam, Integer maxTeam, boolean visible, Integer nbRounds, Integer nbCourts) {
         this.name = name;
@@ -116,7 +116,7 @@ public class Tournament implements Serializable {
 
 
 
- 
+
     public Tournament() {
 
         this.status = TournamentStatus.AVAILABLE;

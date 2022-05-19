@@ -1,0 +1,47 @@
+<html xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="fr">
+<head>
+    <div th:replace="fragments/header"></div>
+    <link rel="stylesheet" th:href="@{/styles/phase/view.css}" href=""/>
+    <title>Affichage Phase</title>
+</head>
+
+<body class="bg">
+<div class="pageContainer">
+    <div th:replace="fragments/sidebar"></div>
+    <div class="contentContainer">
+        <div th:replace="fragments/searchbar"></div>
+        <div class="homeContainer">
+            <div class="cardRound">
+                <div class="cardRoundTitle">
+                    <p th:text="${currentTournament.name}"> : </p>
+                </div>
+                <div class="cardRoundContent">
+                    <div class="phaseContainer">
+                        <div class="phaseContainerTitle">
+                            <p th:text="'Phase ' + ${currentPhase.nbPhase}"></p>
+                        </div>
+                        <div class="phaseContainerContent">
+                            <div th:if="${typeRound == 'POOL'}">
+                                TEST
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--                <h1>Type de phase</h1>-->
+            <!--                <h2 th:text="${currentPhase.getDiscriminatorValue()}"></h2>-->
+
+
+            <!--                <h1>Liste équipes</h1>-->
+            <!--                <tr th:each="team: ${teamsRound1}">-->
+            <!--                    <td th:text="${team.name}"></td>-->
+            <!--                    <td th:text="${team.code}"></td>-->
+            <!--                </tr>-->
+
+        </div>
+    </div>
+</div>
+</body>
+<div th:replace="fragments/footer"></div>
+</html>

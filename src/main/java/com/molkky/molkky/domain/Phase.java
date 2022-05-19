@@ -1,10 +1,8 @@
 package com.molkky.molkky.domain;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import type.PhaseStatus;
-import type.PhaseType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -49,6 +47,11 @@ public class Phase {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "phase_id")
     private List<Round> rounds = new ArrayList<>();
+
+    @Transient
+    public String getDiscriminatorValue() {
+        return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+    }
 
     public Phase(){
     }
