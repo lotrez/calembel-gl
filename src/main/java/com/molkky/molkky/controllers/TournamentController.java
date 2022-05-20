@@ -184,5 +184,13 @@ public class TournamentController extends DefaultAttributes {
         return "/tournament/view";
     }
 
+    @PostMapping("/addStaffMembers")
+    public String addStaffToTournament(Model model, @RequestParam(name="staffCount") String staffCount,
+                                       @RequestParam(name="tournamentId") String tournamentId) {
+
+        model.addAttribute("tournament_id", tournamentId);
+        model.addAttribute("staff_counter", staffCount);
+        return "redirect:/tournament/"+tournamentId+"/view";
+    }
 
 }
