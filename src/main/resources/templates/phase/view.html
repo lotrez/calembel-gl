@@ -23,13 +23,11 @@
                                     <tr style="color:#8C69F4; margin: 10px; text-align: center; width:90%">
                                         <th>Classement</th>
                                         <th>Nom d'équipe</th>
-                                        <th>Nombre de joueurs</th>
                                         <th>Nombre de victoires</th>
                                     </tr>
-                                    <tr th:each="team, iStat: ${teamsRound1}" style="text-align: center">
+                                    <tr th:each="team, iStat: ${teamsRound1}" style="text-align: center;">
                                         <td th:text="${iStat.index+1}"></td>
                                         <td th:text="${team.name}"></td>
-                                        <td th:text="${currentTournament.nbPlayersPerTeam}"></td>
                                         <td th:text="${team.nbWins}"></td>
                                     </tr>
                                 </table>

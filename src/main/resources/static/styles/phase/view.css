@@ -11,6 +11,7 @@
     flex-direction: column;
     border-radius: 4px;
     box-shadow: 0 1px 4px 0.5px rgba(0,0,0,0.25);
+    margin-right: 10px;
 }
 
 .cardRoundTitle{
@@ -25,17 +26,20 @@
 }
 
 .cardRoundContent{
-    width: 100%;
     height: min-content;
     margin-left: 25px;
     margin-bottom: 10px;
 }
 
-.phaseContainerContent{
-    display: flex;
-    justify-content: center;
-}
-
 .phaseContainerTitle{
     margin-left: 25px;
+}
+
+.phaseContainerContent{
+    margin-right: 15px;
+}
+
+td {
+    border-bottom:solid;
+    border-color:#8C69F4;
 }
