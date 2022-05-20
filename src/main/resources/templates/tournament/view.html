@@ -29,6 +29,11 @@
                 <h3 class="partSubtitle">Rounds</h3>
                 <div class="dir">
                     <div>
+                        <ul>
+                            <li th:each="phase: ${phasesType}">
+                            <span th:text="${phase.getPhase().getId()}"></span> = <span th:text="${phase.getPhaseType()}"></span>
+                            </li>
+                        </ul>
                         <ul style="text-align: end;" class="roundsList">
                             <li>Phase de poules</li>
                             <li>Quarts de finale</li>
@@ -63,10 +68,10 @@
                             <div class="cardContentContainer">
                                 <p class="teamLogo"></p>
                                 <ul class="roundsList">
-                                    <!--<th:block th:each="team : ${team.getUserTournamentRoles()}">
-                                        <li class="teamMember" th:text="${team.getUser().getSurname()}"></li>
+                                    <th:block th:each="team : ${team.getUserTournamentRoles()}">
+                                        <li class="teamMember" th:text="${team.getUser().getForename()}"></li>
                                         <li>hello</li>
-                                    </th:block> -->
+                                    </th:block>
                                 </ul>
                             </div>
                         </div>
