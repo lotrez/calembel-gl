@@ -3,9 +3,14 @@ package com.molkky.molkky.controllers;
 
 import com.molkky.molkky.controllers.superclass.DefaultAttributes;
 import com.molkky.molkky.domain.Tournament;
+import com.molkky.molkky.domain.User;
+import com.molkky.molkky.model.AddPlayerModel;
+import com.molkky.molkky.model.AddPlayerlistModel;
 import com.molkky.molkky.model.TournamentModel;
 import com.molkky.molkky.repository.TournamentRepository;
 import com.molkky.molkky.service.TournamentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +21,8 @@ import type.TournamentStatus;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/tournament")
@@ -26,6 +33,7 @@ public class TournamentController extends DefaultAttributes {
     @Autowired
     private TournamentService tournamentService;
 
+    private static final Logger logger = LoggerFactory.getLogger(TournamentController.class);
 
     private String allTournament="tournament";
     private String redirectionAll = "/tournament/allTournament";
@@ -101,6 +109,31 @@ public class TournamentController extends DefaultAttributes {
         tournamentRepository.save(tournament);
         model.addAttribute("tournament",tournament);
         return "/tournament/view";
+    }
+
+    @PostMapping("/addStaff")
+    public ModelAndView addStaff(@ModelAttribute("form") AddPlayerlistModel form, ModelMap model){
+        model.addAttribute(allTournament, new TournamentModel());
+        List<AddPlayerModel> players = form.getPlayers();
+        List<User> users = new ArrayList<>();
+
+
+        for(AddPlayerModel player : players){
+            User user = player.addPlayer();
+            users.add(user);
+        }
+
+        if(!areAllDistinct(users)){
+            model.addAttribute("isDiffMail", false);
+            logger.trace("players must have diff email");
+            return new ModelAndView( "/team/addPlayer", model) ;
+        }
+        return new ModelAndView( "redirect:/tournament/addStaff", model) ;
+
+    }
+
+    boolean areAllDistinct(List<User> users) {
+        return users.stream().map(User::getEmail).distinct().count() == users.size();
     }
 
 
