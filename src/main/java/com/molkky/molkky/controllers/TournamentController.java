@@ -117,13 +117,13 @@ public class TournamentController extends DefaultAttributes {
     }
 
     @GetMapping("/{id}/view")
-    public String tournamentView(Model model, @PathVariable("id") String id, HttpSession session){
+    public String tournamentView(Model model, @PathVariable("id") String id, HttpSession session) {
 
         //USER FROM SESSION
         UserLogged user = getUser(session);
 
-        if(user!=null){
-            if(user.getTournament().getId().toString().equals(id) && user.getRole().equals(UserRole.ADM)){
+        if (user != null) {
+            if (user.getTournament().getId().toString().equals(id) && user.getRole().equals(UserRole.ADM)) {
                 model.addAttribute("user", user);
             }
         }
@@ -138,32 +138,32 @@ public class TournamentController extends DefaultAttributes {
         List<Phase> phases = tournament.getPhases();
 
         List<PhaseTypeViewModel> phasesType = new ArrayList<>();
-        for (Phase p : phases){
-            if (p instanceof Pool){
+        for (Phase p : phases) {
+            if (p instanceof Pool) {
                 Pool pool = (Pool) p;
                 PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
                 phaseTypeViewModel.setPhase(pool);
                 phaseTypeViewModel.setPhaseType(PhaseType.POOL);
                 phasesType.add(phaseTypeViewModel);
-            }else  if (p instanceof SimpleGame){
+            } else if (p instanceof SimpleGame) {
                 SimpleGame pool = (SimpleGame) p;
                 PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
                 phaseTypeViewModel.setPhase(pool);
                 phaseTypeViewModel.setPhaseType(PhaseType.SIMPLEGAME);
                 phasesType.add(phaseTypeViewModel);
-            }else  if (p instanceof Knockout){
+            } else if (p instanceof Knockout) {
                 Knockout pool = (Knockout) p;
                 PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
                 phaseTypeViewModel.setPhase(pool);
                 phaseTypeViewModel.setPhaseType(PhaseType.KNOCKOUT);
                 phasesType.add(phaseTypeViewModel);
-            }else  if (p instanceof SwissPool){
+            } else if (p instanceof SwissPool) {
                 SwissPool pool = (SwissPool) p;
                 PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
                 phaseTypeViewModel.setPhase(pool);
                 phaseTypeViewModel.setPhaseType(PhaseType.SWISSPOOL);
                 phasesType.add(phaseTypeViewModel);
-            }else  if (p instanceof Finnish){
+            } else if (p instanceof Finnish) {
                 Finnish pool = (Finnish) p;
                 PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
                 phaseTypeViewModel.setPhase(pool);
@@ -178,17 +178,68 @@ public class TournamentController extends DefaultAttributes {
         model.addAttribute("nbTeam", tournament.getTeams().size());
         return "/tournament/view";
 
-
     }
+
     @GetMapping("/view")
-    public String tournamentViewPostLaunch(Model model,@RequestParam(value = "tournamentId", required = false) String tournamentId){
+    public String tournamentViewPostLaunch(Model model,@RequestParam(value = "tournamentId", required = false) String tournamentId,  HttpSession session){
+
+        //USER FROM SESSION
+        UserLogged user = getUser(session);
+
+        if (user != null) {
+            if (user.getTournament().getId().toString().equals(tournamentId) && user.getRole().equals(UserRole.ADM)) {
+                model.addAttribute("user", user);
+            }
+        }
+
+        userTournamentRoleService.getTeamUsers(4);
+
 
         Tournament tournament = tournamentRepository.findById(Integer.valueOf(tournamentId));
 
-        tournament.setStatus(TournamentStatus.INPROGRESS);
+        List<Team> teams = tournament.getTeams();
 
-        tournamentRepository.save(tournament);
-        model.addAttribute("tournament",tournament);
+        List<Phase> phases = tournament.getPhases();
+
+        List<PhaseTypeViewModel> phasesType = new ArrayList<>();
+        for (Phase p : phases) {
+            if (p instanceof Pool) {
+                Pool pool = (Pool) p;
+                PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
+                phaseTypeViewModel.setPhase(pool);
+                phaseTypeViewModel.setPhaseType(PhaseType.POOL);
+                phasesType.add(phaseTypeViewModel);
+            } else if (p instanceof SimpleGame) {
+                SimpleGame pool = (SimpleGame) p;
+                PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
+                phaseTypeViewModel.setPhase(pool);
+                phaseTypeViewModel.setPhaseType(PhaseType.SIMPLEGAME);
+                phasesType.add(phaseTypeViewModel);
+            } else if (p instanceof Knockout) {
+                Knockout pool = (Knockout) p;
+                PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
+                phaseTypeViewModel.setPhase(pool);
+                phaseTypeViewModel.setPhaseType(PhaseType.KNOCKOUT);
+                phasesType.add(phaseTypeViewModel);
+            } else if (p instanceof SwissPool) {
+                SwissPool pool = (SwissPool) p;
+                PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
+                phaseTypeViewModel.setPhase(pool);
+                phaseTypeViewModel.setPhaseType(PhaseType.SWISSPOOL);
+                phasesType.add(phaseTypeViewModel);
+            } else if (p instanceof Finnish) {
+                Finnish pool = (Finnish) p;
+                PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
+                phaseTypeViewModel.setPhase(pool);
+                phaseTypeViewModel.setPhaseType(PhaseType.FINNISH);
+                phasesType.add(phaseTypeViewModel);
+            }
+        }
+
+        model.addAttribute("tournament", tournament);
+        model.addAttribute("phasesType", phasesType);
+        model.addAttribute(allTournament, tournament);
+        model.addAttribute("nbTeam", tournament.getTeams().size());
         return "/tournament/view";
     }
 
