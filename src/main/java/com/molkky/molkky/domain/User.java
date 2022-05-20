@@ -4,11 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
 @Entity
@@ -41,14 +45,13 @@ public class User implements Serializable {
     private String password;
 
 
-    @OneToMany
-    @JoinColumn(name="idUser", nullable = true)
-    private Set<UserTounamentRole> userTounamentRoles;
+    @OneToMany(mappedBy = "user")
+    private List<Notification> notifications = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany()
+    @LazyCollection(LazyCollectionOption.FALSE)
     @JoinColumn(name="idUser", nullable = true)
-    private Set<Notification> notifications;
-
+    private List<UserTournamentRole> userTournamentRoles = new ArrayList<>();
 
 
     public User(String pseudo, String surname, String forename, String club, String email) {
