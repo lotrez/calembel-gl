@@ -63,7 +63,6 @@ public class TournamentController {
         //USER FROM SESSION
         User user = null;
 
-        //System.out.println(userTounamentRoleRepository.findUsersByTeamId(4));
         userTournamentRoleService.getTeamUsers(4);
 
 
@@ -71,8 +70,6 @@ public class TournamentController {
 
         List<Team> teams = tournament.getTeams();
         System.out.println(teams.get(0).getId());
-
-
 
         model.addAttribute("tournament", tournament);
         model.addAttribute("user", user);
