@@ -89,18 +89,16 @@
 
             <form action="#" th:action="@{/tournament/view}" method="post"  class="formContainer">
                 <div th:if=" ${user} != null">
-                    <div th:if=" ${user.role} == 'Administrator'">
                         <div th:if=" ${tournament.status} == 'Available'">
 
                             <div th:if=" ${tournament.isVisible} == false">
-                                <button id="isValid" name = "visible" class="primaryButton" type="submit">Rendre publique le tournois</button>
+                                <button id="isValid" name = "visible" class="primaryButton" type="submit">Rendre  le tournois publique</button>
                             </div>
 
                             <div th:if=" ${tournament.isVisible} == true">
                                 <button id="startTounament" name = "launch" class="primaryButton" type="submit">Lancer le tournois</button>
                             </div>
                         </div>
-                    </div>
                 </div>
                 <input hidden th:value="${tournament.id}" th:name="tournamentId"/>
             </form>
