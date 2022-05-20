@@ -1,7 +1,7 @@
 <html xmlns:th="http://thymeleaf.org" xmlns="http://www.w3.org/1999/html" lang="fr">
 <head>
     <div th:replace="fragments/header"></div>
-    <link rel="stylesheet" th:href="@{/styles/phase/view.css}" href=""/>
+    <link rel="stylesheet" th:href="@{/styles/phase/view.css}"/>
     <title>Affichage Phase</title>
 </head>
 
@@ -13,23 +13,27 @@
         <div class="homeContainer">
             <div class="cardRound">
                 <div class="cardRoundTitle">
-                    <p th:text="${currentTournament.name} + ' - Phase ' + ${currentPhase.nbPhase} + ' : ' + ${typeRound}"> </p>
+                    <p th:text="'Phase ' + ${currentPhase.nbPhase} + ' : ' + ${typeRound}"> </p>
                 </div>
                 <div class="cardRoundContent">
                     <div class="phaseContainer">
                         <div class="phaseContainerContent">
                             <div th:if="${typeRound == 'Poule'}">
-                                <table class="tableForPool">
-                                    <tr style="color:#8C69F4">
+                                <table style="width: 100%">
+                                    <tr style="color:#8C69F4; margin: 10px; text-align: center; width:90%">
+                                        <th>Classement</th>
                                         <th>Nom d'équipe</th>
                                         <th>Nombre de joueurs</th>
+                                        <th>Nombre de victoires</th>
                                     </tr>
-                                    <tr th:each="team: ${teamsRound1}">
+                                    <tr th:each="team, iStat: ${teamsRound1}" style="text-align: center">
+                                        <td th:text="${iStat.index+1}"></td>
                                         <td th:text="${team.name}"></td>
                                         <td th:text="${currentTournament.nbPlayersPerTeam}"></td>
+                                        <td th:text="${team.nbWins}"></td>
                                     </tr>
                                 </table>
-                            </div>x
+                            </div>
                         </div>
                     </div>
                 </div>

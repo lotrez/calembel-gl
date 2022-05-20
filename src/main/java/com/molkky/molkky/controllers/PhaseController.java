@@ -19,9 +19,7 @@ import type.UserRole;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/phase")
@@ -95,6 +93,8 @@ public class PhaseController extends DefaultAttributes {
                     String name = "teamsRound" + element.getId();
                     model.addAttribute("round" + element.getId(), element);
                     List<Team> teams = roundRepository.findById(element.getId()).getTeams();
+                    teams.sort(Comparator.comparing(Team::getNbWins));
+                    Collections.reverse(teams);
                     model.addAttribute(name, teams);
                 }
                 else if (element.getType() == PhaseType.SIMPLEGAME){
