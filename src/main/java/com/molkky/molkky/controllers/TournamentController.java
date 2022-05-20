@@ -12,6 +12,7 @@ import com.molkky.molkky.domain.User;
 import com.molkky.molkky.domain.rounds.*;
 import com.molkky.molkky.model.PhaseTypeViewModel;
 import com.molkky.molkky.model.TournamentModel;
+import com.molkky.molkky.model.UserLogged;
 import com.molkky.molkky.repository.TournamentRepository;
 
 import com.molkky.molkky.repository.UserRepository;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import type.PhaseType;
 import type.TournamentStatus;
+import type.UserRole;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -115,10 +117,16 @@ public class TournamentController extends DefaultAttributes {
     }
 
     @GetMapping("/{id}/view")
-    public String tournamentView(Model model, @PathVariable("id") String id){
+    public String tournamentView(Model model, @PathVariable("id") String id, HttpSession session){
 
         //USER FROM SESSION
-        User user = null;
+        UserLogged user = getUser(session);
+
+        if(user!=null){
+            if(user.getTournament().getId().toString().equals(id) && user.getRole().equals(UserRole.ADM)){
+                model.addAttribute("user", user);
+            }
+        }
 
         userTournamentRoleService.getTeamUsers(4);
 

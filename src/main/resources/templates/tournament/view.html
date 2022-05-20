@@ -85,6 +85,7 @@
                 <p>A définir...</p>
             </div>
 
+<<<<<<< HEAD
             <div th:if=" ${user} != null">
                 <div th:if="${#strings.equals(user.role, 'ADM')}">
                     <div class="partContainer">
@@ -95,6 +96,14 @@
                                 <input style="margin-bottom: 15px;" class="inputPhase" name="nbStaff" th:name="staffCount" type="number" min="1">
                                 <input hidden th:value="${tournament.id}" th:name="tournamentId"/>
                                 <button id="addStaff" class="primaryButton" type="submit">Ajouter Staff</button>
+=======
+            <form action="#" th:action="@{/tournament/view}" method="post"  class="formContainer">
+                <div th:if=" ${user} != null">
+                        <div th:if=" ${tournament.status} == 'Available'">
+
+                            <div th:if=" ${tournament.isVisible} == false">
+                                <button id="isValid" name = "visible" class="primaryButton" type="submit">Rendre  le tournois publique</button>
+>>>>>>> c99f4a96899f33813e7420b7e2ee8a8265f5baf4
                             </div>
                         </form>
                     </div>
@@ -107,7 +116,6 @@
                         <div th:if=" ${tournament.isVisible} == true">
                             <button id="startTounament" name = "launch" class="primaryButton" type="submit">Lancer le tournoi</button>
                         </div>
-                    </div>
                 </div>
             </div>
             <input hidden th:value="${tournament.id}" th:name="tournamentId"/>
