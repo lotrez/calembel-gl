@@ -68,6 +68,9 @@ class MatchControllerTest {
 //        given
         UserLogged userLogged = Mockito.mock(UserLogged.class);
         userLogged.setTournamentRoleId(1);
+        Tournament t = new Tournament();
+        t.setId(1);
+        userLogged.setTournament(t);
         HttpSession session = new MockHttpSession(null, "user");
         session.setAttribute("user", userLogged);
         Match match = createMatch();

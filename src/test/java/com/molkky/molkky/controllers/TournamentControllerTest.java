@@ -58,6 +58,7 @@ class TournamentControllerTest {
     @Mock
     private Tournament tournament;
 
+
     @Test
     void testTournamentController() throws Exception {
         mockMvc.perform(get("/tournament/create/"))
