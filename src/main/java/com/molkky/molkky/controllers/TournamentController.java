@@ -123,7 +123,7 @@ public class TournamentController extends DefaultAttributes {
         UserLogged user = getUser(session);
 
         if(user!=null){
-            if(user.getTournament().getId().equals(id) && user.getRole().equals(UserRole.ADM)){
+            if(user.getTournament().getId().toString().equals(id) && user.getRole().equals(UserRole.ADM)){
                 model.addAttribute("user", user);
             }
         }
