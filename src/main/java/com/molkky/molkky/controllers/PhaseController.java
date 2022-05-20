@@ -91,7 +91,7 @@ public class PhaseController extends DefaultAttributes {
             List<Round> rounds = phase.getRounds();
             rounds.forEach(element -> {
                 if(element.getType() == PhaseType.POOL){
-                    model.addAttribute("typeRound","POOL");
+                    model.addAttribute("typeRound","Poule");
                     String name = "teamsRound" + element.getId();
                     model.addAttribute("round" + element.getId(), element);
                     List<Team> teams = roundRepository.findById(element.getId()).getTeams();

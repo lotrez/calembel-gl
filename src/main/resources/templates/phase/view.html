@@ -13,17 +13,23 @@
         <div class="homeContainer">
             <div class="cardRound">
                 <div class="cardRoundTitle">
-                    <p th:text="${currentTournament.name}"> : </p>
+                    <p th:text="${currentTournament.name} + ' - Phase ' + ${currentPhase.nbPhase} + ' : ' + ${typeRound}"> </p>
                 </div>
                 <div class="cardRoundContent">
                     <div class="phaseContainer">
-                        <div class="phaseContainerTitle">
-                            <p th:text="'Phase ' + ${currentPhase.nbPhase}"></p>
-                        </div>
                         <div class="phaseContainerContent">
-                            <div th:if="${typeRound == 'POOL'}">
-                                TEST
-                            </div>
+                            <div th:if="${typeRound == 'Poule'}">
+                                <table class="tableForPool">
+                                    <tr style="color:#8C69F4">
+                                        <th>Nom d'équipe</th>
+                                        <th>Nombre de joueurs</th>
+                                    </tr>
+                                    <tr th:each="team: ${teamsRound1}">
+                                        <td th:text="${team.name}"></td>
+                                        <td th:text="${currentTournament.nbPlayersPerTeam}"></td>
+                                    </tr>
+                                </table>
+                            </div>x
                         </div>
                     </div>
                 </div>
