@@ -1,12 +1,15 @@
 package com.molkky.molkky.controllers;
 
 
+import com.molkky.molkky.domain.Team;
 import com.molkky.molkky.domain.Tournament;
 import com.molkky.molkky.domain.User;
 import com.molkky.molkky.model.TournamentModel;
 import com.molkky.molkky.repository.TournamentRepository;
 import com.molkky.molkky.repository.UserRepository;
+import com.molkky.molkky.repository.UserTounamentRoleRepository;
 import com.molkky.molkky.service.TounamentService;
+import com.molkky.molkky.service.UserTournamentRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +18,9 @@ import type.TournamentStatus;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.AbstractList;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/tournament")
@@ -27,6 +33,12 @@ public class TournamentController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private UserTounamentRoleRepository userTounamentRoleRepository;
+
+    @Autowired
+    private UserTournamentRoleService userTournamentRoleService;
 
     @GetMapping("/create")
     public String tournamentForm(Model model, HttpSession session) {
@@ -51,7 +63,17 @@ public class TournamentController {
         //USER FROM SESSION
         User user = null;
 
+        //System.out.println(userTounamentRoleRepository.findUsersByTeamId(4));
+        userTournamentRoleService.getTeamUsers(4);
+
+
         Tournament tournament = tournamentRepository.findById(Integer.valueOf(id));
+
+        List<Team> teams = tournament.getTeams();
+        System.out.println(teams.get(0).getId());
+
+
+
         model.addAttribute("tournament", tournament);
         model.addAttribute("user", user);
         model.addAttribute("nbTeam", tournament.getTeams().size());

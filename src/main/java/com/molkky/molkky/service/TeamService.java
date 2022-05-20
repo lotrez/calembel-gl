@@ -52,9 +52,13 @@ public class TeamService {
 
         return teamRepository.save(teamCreate);
 
-
-
     }
+
+    public List<User> getUsers(Integer id) {
+        List<User> users = userRepository.findAll();
+        return users;
+    }
+
 
     public Team addPlayers(AddPlayerlistModel addPlayerlistModel){
 
@@ -86,13 +90,10 @@ public class TeamService {
             userTounamentRole.setRole(UserRole.PLAYER);
             userTounamentRoles.add(userTounamentRole);
 
-
-
         }
 
 
         userTounamentRoleRepository.saveAll(userTounamentRoles);
-
 
         return team;
     }

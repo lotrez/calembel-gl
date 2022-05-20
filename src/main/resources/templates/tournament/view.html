@@ -63,10 +63,10 @@
                             <div class="cardContentContainer">
                                 <p class="teamLogo"></p>
                                 <ul class="roundsList">
-                                    <li class="teamMember">Membre1</li>
-                                    <li class="teamMember">Membre2</li>
-                                    <li class="teamMember">Membre3</li>
-                                    <li class="teamMember">Membre4</li>
+                                    <th:block th:each="team : ${team.getUserTournamentRoles()}">
+                                        <li class="teamMember" th:text="${team.getUser().getSurname()}"></li>
+                                        <li>hello</li>
+                                    </th:block>
                                 </ul>
                             </div>
                         </div>

@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface UserTounamentRoleRepository extends JpaRepository<UserTounamentRole, String>, JpaSpecificationExecutor<UserTounamentRole> {
 
-
     List<UserTounamentRole> findByUser(User user);
+
+
 }
