@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.io.Serializable;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Entity
@@ -17,23 +19,35 @@ public class Match {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE, targetEntity = Court.class)
+    @Column(name = "nbSets")
+    private Integer nbSets;
+
+    @OneToOne(optional = true)
+    private Team winner;
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name="idStaff")
+    private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE, targetEntity = Court.class)
     @JoinColumn(name = "idCourt")
     private Court court;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "match_team",
             joinColumns = @JoinColumn(name = "match_id"),
             inverseJoinColumns = @JoinColumn(name = "team_id"))
-    private List<Team> teams;
+    private List<Team> teams = new ArrayList<>();
+
+    @OneToMany(mappedBy = "match", cascade = CascadeType.ALL)
+    private List<Set> sets;
+
 
     @ManyToOne(optional = true)
     @JoinColumn(name="idRound", nullable = true)
     private Round round;
 
-    @OneToMany(mappedBy = "match")
-    private Set<Shot> shots;
 
     @Column(name = "scoreTeam1")
     private Integer scoreTeam1 = 0;
@@ -44,6 +58,7 @@ public class Match {
     @Column(name = "finished")
     private Boolean finished= false;
 
+
     public Match(Court court, List<Team> teams) {
         this.court = court;
         this.teams = teams;
@@ -51,4 +66,7 @@ public class Match {
 
     public Match() {
     }
+
+
 }
+

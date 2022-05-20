@@ -1,38 +1,97 @@
 package com.molkky.molkky.controllers;
 
 
+
+import com.molkky.molkky.domain.Phase;
 import com.molkky.molkky.domain.Team;
+
+import com.molkky.molkky.controllers.superclass.DefaultAttributes;
+
 import com.molkky.molkky.domain.Tournament;
 import com.molkky.molkky.domain.User;
+import com.molkky.molkky.domain.rounds.*;
+import com.molkky.molkky.model.PhaseTypeViewModel;
 import com.molkky.molkky.model.TournamentModel;
 import com.molkky.molkky.repository.TournamentRepository;
+
 import com.molkky.molkky.repository.UserRepository;
 import com.molkky.molkky.repository.UserTounamentRoleRepository;
-import com.molkky.molkky.service.TounamentService;
+import com.molkky.molkky.service.TournamentService;
 import com.molkky.molkky.service.UserTournamentRoleService;
+
+import com.molkky.molkky.service.TournamentService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import type.PhaseType;
 import type.TournamentStatus;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.AbstractList;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("/tournament")
-public class TournamentController {
+public class TournamentController extends DefaultAttributes {
     @Autowired
     private TournamentRepository tournamentRepository;
 
     @Autowired
-    private TounamentService tournamentService;
+    private TournamentService tournamentService;
 
-    @Autowired
-    private UserRepository userRepository;
+
+    private String allTournament="tournament";
+    private String redirectionAll = "/tournament/allTournament";
+
+
+    @GetMapping("/allTournament")
+    public String tournamentForm(Model model) {
+        model.addAttribute(allTournament, tournamentRepository.findAll());
+        return redirectionAll;
+    }
+
+    @GetMapping("/TournamentOpen")
+    public String tournamentOpen(Model model) {
+        model.addAttribute(allTournament, tournamentRepository.findByVisibleAndStatus(true,TournamentStatus.AVAILABLE));
+        return redirectionAll;
+    }
+
+
+    @GetMapping("/TournamentClose")
+    public String tournamentClose(Model model) {
+        model.addAttribute(allTournament, tournamentRepository.findByVisibleAndStatus(true,TournamentStatus.CLOSED));
+
+        return redirectionAll;
+    }
+
+    @GetMapping("/TournamentInProgress")
+    public String tournamentinProgress(Model model) {
+        model.addAttribute(allTournament, tournamentRepository.findByVisibleAndStatus(true,TournamentStatus.INPROGRESS));
+        return redirectionAll;
+    }
+
+    @PostMapping("/allTournament")
+    public ModelAndView goToCreate(ModelMap model) {
+        return new ModelAndView("redirect:/tournament/create", model);
+    }
+
+    @PostMapping("/inscription")
+    public ModelAndView goToInscription(ModelMap model){return new ModelAndView("redirect:/team/create",model);}
+
+
+    @PostMapping ("/currentTournament")
+    public String currentTournament() {
+        return "/";
+    }
+
+    @GetMapping ("/tournamentOnGoing")
+    public String getTournamentOnGoing() {
+        return "/tournament/tournamentOnGoing";
+    }
 
     @Autowired
     private UserTounamentRoleRepository userTounamentRoleRepository;
@@ -42,9 +101,7 @@ public class TournamentController {
 
     @GetMapping("/create")
     public String tournamentForm(Model model, HttpSession session) {
-        model.addAttribute("tournament", new TournamentModel());
-        User user = (User)session.getAttribute("user");
-        model.addAttribute("user", user);
+        model.addAttribute(allTournament, new TournamentModel());
         return "tournament/create";
     }
 
@@ -54,7 +111,7 @@ public class TournamentController {
         Tournament tournamentEntity = tournamentService.create(tournament);
 
         int id = tournamentEntity.getId();
-        return "redirect:/tournament/"+id+"/view";
+        return "redirect:/phase/choosePhases?tournamentId="+id;
     }
 
     @GetMapping("/{id}/view")
@@ -69,29 +126,63 @@ public class TournamentController {
         Tournament tournament = tournamentRepository.findById(Integer.valueOf(id));
 
         List<Team> teams = tournament.getTeams();
-        System.out.println(teams.get(0).getId());
+
+        List<Phase> phases = tournament.getPhases();
+
+        List<PhaseTypeViewModel> phasesType = new ArrayList<>();
+        for (Phase p : phases){
+            if (p instanceof Pool){
+                Pool pool = (Pool) p;
+                PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
+                phaseTypeViewModel.setPhase(pool);
+                phaseTypeViewModel.setPhaseType(PhaseType.POOL);
+                phasesType.add(phaseTypeViewModel);
+            }else  if (p instanceof SimpleGame){
+                SimpleGame pool = (SimpleGame) p;
+                PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
+                phaseTypeViewModel.setPhase(pool);
+                phaseTypeViewModel.setPhaseType(PhaseType.SIMPLEGAME);
+                phasesType.add(phaseTypeViewModel);
+            }else  if (p instanceof Knockout){
+                Knockout pool = (Knockout) p;
+                PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
+                phaseTypeViewModel.setPhase(pool);
+                phaseTypeViewModel.setPhaseType(PhaseType.KNOCKOUT);
+                phasesType.add(phaseTypeViewModel);
+            }else  if (p instanceof SwissPool){
+                SwissPool pool = (SwissPool) p;
+                PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
+                phaseTypeViewModel.setPhase(pool);
+                phaseTypeViewModel.setPhaseType(PhaseType.SWISSPOOL);
+                phasesType.add(phaseTypeViewModel);
+            }else  if (p instanceof Finnish){
+                Finnish pool = (Finnish) p;
+                PhaseTypeViewModel phaseTypeViewModel = new PhaseTypeViewModel();
+                phaseTypeViewModel.setPhase(pool);
+                phaseTypeViewModel.setPhaseType(PhaseType.FINNISH);
+                phasesType.add(phaseTypeViewModel);
+            }
+        }
 
         model.addAttribute("tournament", tournament);
-        model.addAttribute("user", user);
+        model.addAttribute("phasesType", phasesType);
+        model.addAttribute(allTournament, tournament);
         model.addAttribute("nbTeam", tournament.getTeams().size());
+        return "/tournament/view";
 
-        return "tournament/view";
+
     }
-
-
-
-    @PostMapping(value = "/view" , params = "launch")
-    public String tournamentViewPostLaunch(@RequestParam(value = "tournamentId", required = false) String tournamentId){
+    @GetMapping("/view")
+    public String tournamentViewPostLaunch(Model model,@RequestParam(value = "tournamentId", required = false) String tournamentId){
 
         Tournament tournament = tournamentRepository.findById(Integer.valueOf(tournamentId));
 
         tournament.setStatus(TournamentStatus.INPROGRESS);
 
         tournamentRepository.save(tournament);
-
-        return "redirect:/tournament/create";
+        model.addAttribute("tournament",tournament);
+        return "/tournament/view";
     }
-
 
 
 }

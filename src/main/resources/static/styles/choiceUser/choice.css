@@ -1,0 +1,29 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+#pageContainerItem {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+}
+
+.primaryButton {
+    margin-bottom: 20px;
+    width: 750px;
+}
+div{
+    text-align:center;
+    font-family: "Inter", sans-serif;
+}
+
+#listTournaments {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
