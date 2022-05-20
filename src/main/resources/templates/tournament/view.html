@@ -2,6 +2,7 @@
 <head>
     <div th:replace="fragments/header"></div>
     <link rel="stylesheet" th:href="@{/styles/tournament/view.css}" href="../" />
+    <link rel="stylesheet" th:href="@{/styles/tournament/create.css}" href="../" />
     <title>View Tournoi</title>
 </head>
 <body class="bg">
@@ -10,17 +11,18 @@
         <div class="contentContainer">
             <div th:replace="fragments/searchbar"></div>
             <div class="contentTitle">
-                <div class="setInline statusCircleGreen"></div>
-                <p class="setInline" th:text="| - ${tournament.name} - (${tournament.status})|"></p>
+                <div class="setInline statusCircleGreen"> - </div>
+                <p id="tournament_name" class="setInline" th:text="|${tournament.name}|"></p>
+                <p id="tournament_status" class="setInline" th:text="|(${tournament.status})|"></p>
             </div>
             <div class="partContainer">
                 <h2 class="partTitle">Informations générales</h2>
-                <p th:text="|Le tournoi ${tournament.name} du ${tournament.date} aura lieu à ${tournament.location} débutera le ${tournament.date}.|"></p>
+                <p id="date-and-location" th:text="|Le tournoi ${tournament.name} du ${tournament.date} aura lieu à ${tournament.location} débutera le ${tournament.date}.|"></p>
                 <p>Merci d'apporter votre propre jeu de molkky et de quoi manger pour la journée. Le club ne propose pas de services de restauration.</p>
                 <br>
-                <p th:text="|Le nombre d'équipes pour ce tournoi est compris entre ${tournament.minTeam} et ${tournament.maxTeam}.|"></p>
-                <p th:text="|Il y a actuellement ${nbTeam} équipes inscrites à ce tournoi.|"></p>
-                <p th:text="|La phase courante est la phase n°${tournament.indexPhase}.|"></p>
+                <p id="teams-extremums" th:text="|Le nombre d'équipes pour ce tournoi est compris entre ${tournament.minTeam} et ${tournament.maxTeam}.|"></p>
+                <p id="nbTeam" th:text="|Il y a actuellement ${nbTeam} équipes inscrites à ce tournoi.|"></p>
+                <p id="current-phase" th:text="|La phase courante est la phase n°${tournament.indexPhase}.|"></p>
             </div>
 
             <div class="partContainer">
@@ -92,7 +94,7 @@
                             <h2 class="partTitle">Ajouter Staff</h2>
                             <div class="inputContainer">
                                 <label class="inputLabel">Ajout Staff</label>
-                                <input style="margin-bottom: 15px;" class="inputPhase" name="nbStaff" th:name="staffCount" type="number" min="1">
+                                <input style="margin-bottom: 15px;" class="inputPhase" id="staff-counter" name="nbStaff" th:name="staffCount" type="number" min="1">
                                 <input hidden th:value="${tournament.id}" th:name="tournamentId"/>
                                 <button id="addStaff" class="primaryButton" type="submit">Ajouter Staff</button>
                             </div>
