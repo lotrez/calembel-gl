@@ -30,25 +30,27 @@
                 <div class="dir">
                     <div>
                         <ul>
-                            <li th:each="phase: ${phasesType}">
-                            <span th:text="${phase.getPhase().getId()}"></span> = <span th:text="${phase.getPhaseType()}"></span>
-                                <strong >Test</strong>
+                            <li th:each="phase, itemStat: ${phasesType}">
+                            <span th:text="'Phase ' + ${itemStat.index+1}  "></span> : <span th:text="${phase.getPhaseType()}"></span>
+
+                                <div th:switch="${phase.getPhaseType()}">
+                                    <div th:case="${T(type.PhaseType).POOL}">
+                                        <span th:text="'Nombre des poules: ' + ${phase.getPhase().getNbPools()}  "></span>
+                                    </div>
+                                    <div th:case="${T(type.PhaseType).KNOCKOUT}">
+                                    </div>
+                                    <div th:case="${T(type.PhaseType).FINNISH}">
+                                    </div>
+                                    <div th:case="${T(type.PhaseType).SIMPLEGAME}">
+                                    </div>
+                                    <div th:case="${T(type.PhaseType).SWISSPOOL}">
+                                    </div>
+                                </div>
                             </li>
-                        </ul>
-                        <ul style="text-align: end;" class="roundsList">
-                            <li>Phase de poules</li>
-                            <li>Quarts de finale</li>
-                            <li>Demi finale</li>
-                            <li>Finale</li>
                         </ul>
                     </div>
                     <div>
-                        <ul class="roundsList">
-                            <li>Best of 1</li>
-                            <li>Best of 3</li>
-                            <li>Best of 3</li>
-                            <li>Best of 5</li>
-                        </ul>
+
                     </div>
                 </div>
             </div>
