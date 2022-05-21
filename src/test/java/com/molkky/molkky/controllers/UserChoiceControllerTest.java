@@ -1,12 +1,16 @@
 package com.molkky.molkky.controllers;
 
+import com.molkky.molkky.domain.Tournament;
 import com.molkky.molkky.domain.User;
 import com.molkky.molkky.domain.UserTournamentRole;
+import com.molkky.molkky.model.UserLogged;
 import com.molkky.molkky.repository.TournamentRepository;
 import com.molkky.molkky.repository.UserRepository;
 import com.molkky.molkky.repository.UserTournamentRoleRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -39,6 +43,9 @@ class UserChoiceControllerTest {
     @MockBean
     private UserTournamentRole userTournamentRole;
 
+    @MockBean
+    private Tournament tournament;
+
     @Test
     void testUserChoiceControllerWithException() throws Exception {
         mockMvc.perform(get("/user_choice/choiceTournament"))
@@ -60,16 +67,20 @@ class UserChoiceControllerTest {
 
     @Test
     void testUserChoiceControllerChoose() throws Exception {
-
         UserTournamentRole userTournamentRole1 = new UserTournamentRole();
         User userChoice = new User();
         userChoice.setPseudo("TEST");
+
+        Integer id_tournament = 1;
+        Tournament tournament = new Tournament();
+        tournament.setId(id_tournament);
 
         userTournamentRole1.setUser(userChoice);
 
         when(this.userTournamentRoleRepository.findById(anyInt())).thenReturn(userTournamentRole1);
 
         mockMvc.perform(post("/user_choice/choiceRole")
+                        .sessionAttr("tournament",tournament)
                         .param("roleId", "1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("/home"));
