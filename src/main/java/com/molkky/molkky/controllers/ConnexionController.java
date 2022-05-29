@@ -54,11 +54,6 @@ public class ConnexionController {
                         request.getSession().setAttribute("user",userLogged);
                         return new ModelAndView("redirect:/");
                     }
-                    //Creer requete SQL, returns usertournamentRole
-                    //if return something
-                    //new userlogged
-                    //with all the info
-                    //sessionScope(userlogged)
                 }
                 List<UserTournamentRole> adminorstaff = userTournamentRoleRepository.findUserAdminStaff(user);
                 if(adminorstaff.size()==1){
