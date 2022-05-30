@@ -31,10 +31,6 @@ class ConnexionControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ConnexionController connexionController;
-
     @MockBean
     private UserRepository userRepository;
 
