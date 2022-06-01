@@ -13,10 +13,12 @@ import com.molkky.molkky.repository.UserRepository;
 import com.molkky.molkky.repository.UserTournamentRoleRepository;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+import type.UserRole;
 
 import java.text.ParseException;
 import java.util.Random;
@@ -94,6 +96,31 @@ class PlayerFormTest {
         Assertions.assertTrue(config.getDriver().findElement(new By.ByName("players[1].club")).isDisplayed());
 
         Assertions.assertTrue(config.getDriver().findElement(new By.ById("sendTeam")).isDisplayed());
+
+        Assertions.assertEquals("Prénom",config.getDriver().findElement
+                (new By.ByCssSelector("body > div > div.contentContainer > form > div.formContainer " +
+                        "> div:nth-child(1) > div > div:nth-child(1) > label")).getText());
+        Assertions.assertEquals("Nom de famille",config.getDriver().findElement
+                (new By.ByCssSelector("body > div > div.contentContainer > form > div.formContainer " +
+                        "> div:nth-child(1) > div > div:nth-child(2) > label")).getText());
+        Assertions.assertEquals("Mail",config.getDriver().findElement
+                (new By.ByCssSelector("body > div > div.contentContainer > form > div.formContainer " +
+                        "> div:nth-child(1) > div > div:nth-child(3) > label")).getText());
+        Assertions.assertEquals("Club",config.getDriver().findElement
+                (new By.ByCssSelector("body > div > div.contentContainer > form > div.formContainer " +
+                        "> div:nth-child(1) > div > div:nth-child(4) > label")).getText());
+
+        Assertions.assertTrue(config.getDriver().findElement
+                (new By.ByXPath("/html/body/div/div[2]/form/div[3]/div[2]/b")).isDisplayed());
+        Assertions.assertEquals("Joueur 2",config.getDriver().findElement
+                (new By.ByXPath("/html/body/div/div[2]/form/div[3]/div[2]/b")).getText());
+        Assertions.assertTrue(config.getDriver().findElement(new By.ByName("players[1].forename")).isDisplayed());
+        Assertions.assertTrue(config.getDriver().findElement(new By.ByName("players[1].surname")).isDisplayed());
+        Assertions.assertTrue(config.getDriver().findElement(new By.ByName("players[1].mail")).isDisplayed());
+        Assertions.assertTrue(config.getDriver().findElement(new By.ByName("players[1].club")).isDisplayed());
+
+        Assertions.assertTrue(config.getDriver().findElement(new By.ById("sendTeam")).isDisplayed());
+        Assertions.assertEquals("Finaliser",config.getDriver().findElement(new By.ById("sendTeam")).getText());
     }
 
     @Test
@@ -106,7 +133,8 @@ class PlayerFormTest {
         String prenom2 = this.generateName();
         String mail2 = prenom2+"."+nom2+"@gmail.com";
 
-        String tagTeam = config.getDriver().findElement(new By.ByXPath("/html/body/div/div[2]/form/div[1]/a")).getText();
+        String tagTeam = config.getDriver().findElement(new By.ByXPath("/html/body/div/div[2]/form/div[1]/a"))
+                .getText();
         String[] teamName = tagTeam.split(" ");
 
         config.getDriver().findElement(new By.ByName("players[0].forename")).sendKeys(prenom);
@@ -134,6 +162,8 @@ class PlayerFormTest {
         Assertions.assertEquals(mail,user.getEmail());
         Assertions.assertEquals("Molkky Angers",user.getClub());
         Assertions.assertNotNull(userTournamentRole1);
+        Assertions.assertEquals(UserRole.PLAYER,userTournamentRole1.getRole());
+        Assertions.assertEquals(team.getTournament().getId(),userTournamentRole1.getTournament().getId());
 
         Assertions.assertNotNull(user);
         Assertions.assertEquals(nom2,user2.getSurname());
@@ -141,6 +171,8 @@ class PlayerFormTest {
         Assertions.assertEquals(mail2,user2.getEmail());
         Assertions.assertEquals("Molkky Angers",user.getClub());
         Assertions.assertNotNull(userTournamentRole2);
+        Assertions.assertEquals(UserRole.PLAYER,userTournamentRole2.getRole());
+        Assertions.assertEquals(team.getTournament().getId(),userTournamentRole2.getTournament().getId());
     }
 
     @Test
@@ -161,7 +193,121 @@ class PlayerFormTest {
 
         config.getDriver().findElement(new By.ById("sendTeam")).click();
 
-        Assertions.assertTrue(config.getDriver().findElement(new By.ByXPath("/html/body/div/div[2]/form/div[2]/span")).isDisplayed());
+        Assertions.assertTrue(config.getDriver().findElement
+                (new By.ByXPath("/html/body/div/div[2]/form/div[2]/span")).isDisplayed());
+    }
+
+    @Test
+    void testEmptyPlayerForename(){
+        String nom = this.generateName();
+        String prenom = this.generateName();
+        String mail = prenom+"."+nom+"@gmail.com";
+
+        String nom2 = this.generateName();
+        String prenom2 = this.generateName();
+        String mail2 = prenom2+"."+nom2+"@gmail.com";
+
+        WebElement prenomPlayer0 = config.getDriver().findElement(new By.ByName("players[0].forename"));
+        String val = prenomPlayer0.getAttribute("validationMessage");
+
+        config.getDriver().findElement(new By.ByName("players[0].surname")).sendKeys(nom);
+        config.getDriver().findElement(new By.ByName("players[0].mail")).sendKeys(mail);
+        config.getDriver().findElement(new By.ByName("players[0].club")).sendKeys("Molkky Angers");
+
+        config.getDriver().findElement(new By.ByName("players[1].forename")).sendKeys(nom2);
+        config.getDriver().findElement(new By.ByName("players[1].surname")).sendKeys(prenom2);
+        config.getDriver().findElement(new By.ByName("players[1].mail")).sendKeys(mail2);
+        config.getDriver().findElement(new By.ByName("players[1].club")).sendKeys("Molkky Angers");
+
+        config.getDriver().findElement(new By.ById("sendTeam")).click();
+
+        Assertions.assertTrue(Boolean.parseBoolean(prenomPlayer0.getAttribute("required")));
+        Assertions.assertEquals("Veuillez renseigner ce champ.",val);
+    }
+
+    @Test
+    void testEmptyPlayerSurename(){
+        String nom = this.generateName();
+        String prenom = this.generateName();
+        String mail = prenom+"."+nom+"@gmail.com";
+
+        String nom2 = this.generateName();
+        String prenom2 = this.generateName();
+        String mail2 = prenom2+"."+nom2+"@gmail.com";
+
+        WebElement nomPlayer0 = config.getDriver().findElement(new By.ByName("players[0].surname"));
+        String val = nomPlayer0.getAttribute("validationMessage");
+
+        config.getDriver().findElement(new By.ByName("players[0].forename")).sendKeys(prenom);
+        config.getDriver().findElement(new By.ByName("players[0].mail")).sendKeys(mail);
+        config.getDriver().findElement(new By.ByName("players[0].club")).sendKeys("Molkky Angers");
+
+        config.getDriver().findElement(new By.ByName("players[1].forename")).sendKeys(nom2);
+        config.getDriver().findElement(new By.ByName("players[1].surname")).sendKeys(prenom2);
+        config.getDriver().findElement(new By.ByName("players[1].mail")).sendKeys(mail2);
+        config.getDriver().findElement(new By.ByName("players[1].club")).sendKeys("Molkky Angers");
+
+        config.getDriver().findElement(new By.ById("sendTeam")).click();
+
+        Assertions.assertTrue(Boolean.parseBoolean(nomPlayer0.getAttribute("required")));
+        Assertions.assertEquals("Veuillez renseigner ce champ.",val);
+    }
+
+    @Test
+    void testEmptyPlayerMail(){
+        String nom = this.generateName();
+        String prenom = this.generateName();
+        String mail = prenom+"."+nom+"@gmail.com";
+
+        String nom2 = this.generateName();
+        String prenom2 = this.generateName();
+        String mail2 = prenom2+"."+nom2+"@gmail.com";
+
+        WebElement mailPlayer0 = config.getDriver().findElement(new By.ByName("players[0].mail"));
+        String val = mailPlayer0.getAttribute("validationMessage");
+
+        config.getDriver().findElement(new By.ByName("players[0].forename")).sendKeys(prenom);
+        config.getDriver().findElement(new By.ByName("players[0].surname")).sendKeys(nom);
+        config.getDriver().findElement(new By.ByName("players[0].club")).sendKeys("Molkky Angers");
+
+        config.getDriver().findElement(new By.ByName("players[1].forename")).sendKeys(nom2);
+        config.getDriver().findElement(new By.ByName("players[1].surname")).sendKeys(prenom2);
+        config.getDriver().findElement(new By.ByName("players[1].mail")).sendKeys(mail2);
+        config.getDriver().findElement(new By.ByName("players[1].club")).sendKeys("Molkky Angers");
+
+        config.getDriver().findElement(new By.ById("sendTeam")).click();
+
+        Assertions.assertTrue(Boolean.parseBoolean(mailPlayer0.getAttribute("required")));
+        Assertions.assertEquals("Veuillez renseigner ce champ.",val);
+    }
+
+    @Test
+    void testWrongPlayerMail(){
+        String nom = this.generateName();
+        String prenom = this.generateName();
+        String mail = "test";
+
+        String nom2 = this.generateName();
+        String prenom2 = this.generateName();
+        String mail2 = prenom+"."+nom+"@gmail.com";
+
+        config.getDriver().findElement(new By.ByName("players[0].forename")).sendKeys(prenom);
+        config.getDriver().findElement(new By.ByName("players[0].surname")).sendKeys(nom);
+        config.getDriver().findElement(new By.ByName("players[0].mail")).sendKeys(mail);
+        config.getDriver().findElement(new By.ByName("players[0].club")).sendKeys("Molkky Angers");
+
+        WebElement mailPlayer0 = config.getDriver().findElement(new By.ByName("players[0].mail"));
+        String val = mailPlayer0.getAttribute("validationMessage");
+        System.out.println(val);
+
+        config.getDriver().findElement(new By.ByName("players[1].forename")).sendKeys(nom2);
+        config.getDriver().findElement(new By.ByName("players[1].surname")).sendKeys(prenom2);
+        config.getDriver().findElement(new By.ByName("players[1].mail")).sendKeys(mail2);
+        config.getDriver().findElement(new By.ByName("players[1].club")).sendKeys("Molkky Angers");
+
+        config.getDriver().findElement(new By.ById("sendTeam")).click();
+
+        Assertions.assertEquals("Veuillez inclure \"@\" dans l'adresse e-mail. Il manque un symbole \"@\" dans \"test\".",val);
     }
 
     @AfterAll
