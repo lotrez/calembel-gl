@@ -82,8 +82,6 @@ public class TeamController extends DefaultAttributes {
 
 
 
-
-
         AddPlayerlistModel players = new AddPlayerlistModel();
 
         for(int i =0 ; i< teamNew.getTournament().getNbPlayersPerTeam();i++){
