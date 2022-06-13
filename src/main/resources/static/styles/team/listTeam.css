@@ -213,3 +213,7 @@ ul.roundsList {
     display: block;
     cursor: pointer;
 }
+.teamPhoto {
+    max-width:100px;
+    max-height:50px;
+}
