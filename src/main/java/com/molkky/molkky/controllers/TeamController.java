@@ -60,18 +60,15 @@ public class TeamController extends DefaultAttributes {
 
 
     @PostMapping("/create")
-    public ModelAndView submit(@ModelAttribute("team") CreateTeamModel team, ModelMap model, @RequestParam("photo")MultipartFile multipartFile) throws IOException {
+    public ModelAndView submit(@ModelAttribute("team") CreateTeamModel team, ModelMap model, @RequestParam("photoFile")MultipartFile multipartFile) throws IOException {
 
 
         Team teamNew = teamService.create(team);
-
         //Start
         String fileNameString = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         teamNew.setPhoto(fileNameString);
-
         Team teamSave = teamRepository.save(teamNew);
-        String uploadDir = "../../../../src/main/resources/static/teamPhoto" + teamSave.getId();
-
+        String uploadDir = "./calembel-gl/src/main/resources/static/teamPhotos/" + teamSave.getId();
         FileUploadUtil.saveFile(uploadDir, fileNameString, multipartFile);
 
         //Fin
