@@ -60,6 +60,9 @@ public class Team implements Serializable {
     @Column(name = "present",columnDefinition = "boolean default true")
     private boolean present;
 
+    @Column (name = "photo", nullable = true)
+    private String photo;
+
     public Team(){
         this.shots = new ArrayList<>();
         this.userTournamentRoles = new ArrayList<>();
@@ -68,5 +71,13 @@ public class Team implements Serializable {
         this.eliminated = false;
         this.nbPoints =0;
         this.present = true;
+        this.photo = "";
+    }
+
+    @Transient
+    public String getPhotosImagePath() {
+        String photos = getPhoto();
+        if (photos == null || id == null) return null;
+        return "/user-photos/" + id + "/" + photos;
     }
 }
