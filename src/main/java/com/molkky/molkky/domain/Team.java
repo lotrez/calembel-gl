@@ -74,10 +74,4 @@ public class Team implements Serializable {
         this.photo = "";
     }
 
-    @Transient
-    public String getPhotosImagePath() {
-        String photos = getPhoto();
-        if (photos == null || id == null) return null;
-        return "/user-photos/" + id + "/" + photos;
-    }
 }

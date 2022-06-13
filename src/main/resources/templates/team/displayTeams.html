@@ -28,7 +28,12 @@
                     </div>
                 </div>
                 <div class="cardContentContainer">
-                    <img class="teamLogo" th:src="@{/assets/teams.svg}" alt="Team icon"/>
+                    <th:block th:if="${team.photo.isEmpty()}">
+                        <img class="teamLogo" th:src="@{/assets/teams.svg}" alt="Team icon"/>
+                    </th:block>
+                    <th:block th:unless="${team.photo.isEmpty()}">
+                        <img th:src="@{/assets/1.png}" alt="Team icon"/>
+                    </th:block>
                     <ul class="roundsList">
                         <th:block th:if="${team.getUserTournamentRoles().isEmpty()}">
                             <li class="teamMember">Vide</li>

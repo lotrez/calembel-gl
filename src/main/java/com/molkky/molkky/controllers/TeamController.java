@@ -68,7 +68,7 @@ public class TeamController extends DefaultAttributes {
         String fileNameString = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         teamNew.setPhoto(fileNameString);
         Team teamSave = teamRepository.save(teamNew);
-        String uploadDir = "./calembel-gl/src/main/resources/static/teamPhotos/" + teamSave.getId();
+        String uploadDir = "./src/main/resources/static/teamPhotos/" + teamSave.getId();
         FileUploadUtil.saveFile(uploadDir, fileNameString, multipartFile);
 
         //Fin
