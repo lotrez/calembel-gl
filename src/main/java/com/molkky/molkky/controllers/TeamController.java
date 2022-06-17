@@ -70,15 +70,8 @@ public class TeamController extends DefaultAttributes {
         Team teamSave = teamRepository.save(teamNew);
         String uploadDir = "./src/main/resources/static/teamPhotos/" + teamSave.getId();
         FileUploadUtil.saveFile(uploadDir, fileNameString, multipartFile);
-
         //Fin
-
-
         model.addAttribute("team", teamNew);
-
-
-
-
         AddPlayerlistModel players = new AddPlayerlistModel();
 
         for(int i =0 ; i< teamNew.getTournament().getNbPlayersPerTeam();i++){

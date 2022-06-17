@@ -5,13 +5,8 @@ import com.molkky.molkky.domain.Tournament;
 import com.molkky.molkky.model.AddPlayerModel;
 import com.molkky.molkky.model.AddPlayerlistModel;
 import com.molkky.molkky.model.CreateTeamModel;
-import com.molkky.molkky.repository.TeamRepository;
-import com.molkky.molkky.repository.TournamentRepository;
-import com.molkky.molkky.repository.UserRepository;
-import com.molkky.molkky.repository.UserTournamentRoleRepository;
-import com.molkky.molkky.service.EmailSenderService;
-import com.molkky.molkky.service.NotificationService;
-import com.molkky.molkky.service.TeamService;
+import com.molkky.molkky.repository.*;
+import com.molkky.molkky.service.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -21,7 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.multipart.MultipartResolver;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +34,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(value = TeamController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
+@WebAppConfiguration
 @ExtendWith(MockitoExtension.class)
 class TeamControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private WebApplicationContext webApplicationContext;
     @MockBean
     private UserRepository userRepository;
 
@@ -47,7 +51,26 @@ class TeamControllerTest {
 
     @MockBean
     private TournamentRepository tournamentRepository;
-
+    @MockBean
+    private MatchRepository matchRepository;
+    @MockBean
+    private MatchService matchService;
+    @MockBean
+    private CourtService courtService;
+    @MockBean
+    private PhaseController phaseController;
+    @MockBean
+    private RegisterController registerController;
+    @MockBean
+    private ScheduleController scheduleController;
+    @MockBean
+    private SearchController searchController;
+    @MockBean
+    private SetService setService;
+    @MockBean
+    private TournamentController tournamentController;
+    @MockBean
+    private MultipartResolver multipartResolver;
     @MockBean
     private TeamRepository teamRepository;
     @MockBean
@@ -73,32 +96,6 @@ class TeamControllerTest {
                 .andExpect(model().attributeExists("tournaments"))
                 .andExpect(model().attributeExists("team"))
                 .andExpect(view().name("/team/create"));
-    }
-
-    @Test
-    void testPostTeamMethod() throws Exception{
-        Tournament tournament = new Tournament();
-        tournament.setNbPlayersPerTeam(2);
-
-        Team team = new Team();
-        team.setTournament(tournament);
-
-        Mockito.when(teamService.create(Mockito.any(CreateTeamModel.class))).thenReturn(team);
-
-        mockMvc.perform(post("/team/create")
-                        .param("nom","Test")
-                        .param("tournamentId","1")
-                        .flashAttr("teamModel",new CreateTeamModel()))
-                .andDo(print())
-                .andExpect(view().name("/team/addPlayer"))
-                .andExpect(model().attribute("team",team))
-                .andExpect(model().attributeExists("teamModel"))
-                .andExpect(model().attributeExists("form"))
-                .andExpect(model().attribute("isDiffMail",true))
-                .andExpect(view().name("/team/addPlayer"))
-                .andExpect(status().is2xxSuccessful());
-
-        Mockito.verify(teamService,Mockito.times(1)).create(Mockito.any(CreateTeamModel.class));
     }
 
     @Test
