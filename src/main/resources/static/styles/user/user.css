@@ -38,6 +38,7 @@
     box-shadow: 0px 0px 7px 2px rgb(196 196 196 / 25%);
     border-radius: 7px;
     color: white;
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 1000px) {
