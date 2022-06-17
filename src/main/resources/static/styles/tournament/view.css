@@ -91,6 +91,7 @@ ul.roundsList {
     border-top-right-radius: 7px;
     border-top-left-radius: 7px;
     text-transform: uppercase;
+    width: -webkit-fill-available;
 }
 
 .teamNameEliminated {
@@ -102,6 +103,8 @@ ul.roundsList {
     border-top-right-radius: 7px;
     border-top-left-radius: 7px;
     text-transform: uppercase;
+    width: -webkit-fill-available;
+
 }
 .cardContentContainer {
     padding: 5px;
