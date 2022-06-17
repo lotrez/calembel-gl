@@ -3,10 +3,6 @@ package com.molkky.molkky.controllers;
 import com.molkky.molkky.controllers.superclass.DefaultAttributes;
 import com.molkky.molkky.model.UserLogged;
 import com.molkky.molkky.service.TeamService;
-import com.molkky.molkky.utility.FileUploadUtil;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import type.TournamentStatus;
 import com.molkky.molkky.domain.Team;
 import com.molkky.molkky.domain.User;
@@ -23,10 +19,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,17 +59,11 @@ public class TeamController extends DefaultAttributes {
 
 
     @PostMapping("/create")
-    public ModelAndView submit(@ModelAttribute("team") CreateTeamModel team, ModelMap model, @RequestParam("photoFile")MultipartFile multipartFile) throws IOException {
+    public ModelAndView submit(@ModelAttribute("team") CreateTeamModel team, ModelMap model ){
 
 
         Team teamNew = teamService.create(team);
-        //Start
-        String fileNameString = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        teamNew.setPhoto(fileNameString);
-        Team teamSave = teamRepository.save(teamNew);
-        String uploadDir = "./src/main/resources/static/teamPhotos/" + teamSave.getId();
-        FileUploadUtil.saveFile(uploadDir, fileNameString, multipartFile);
-        //Fin
+
         model.addAttribute("team", teamNew);
         AddPlayerlistModel players = new AddPlayerlistModel();
 
